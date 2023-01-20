@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .container{
+            max-width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            height: 100%;
+        }
+
+        #user{
+            display: grid;
+            gap: 20px;
+            padding: 40px 40px;
+            text-align: center;
+        }
+        
+        .card{
+            padding: 10px;
+            background-color: rgb(218, 222, 224);
+            line-height: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+
+        }
+
+        .card p {
+            text-transform: uppercase;
+        }
+
+        button{
+            margin-top: 5px;
+            padding: 10px;
+            /* border-radius: 5px; */
+            width: 95%;
+        }
+        input{
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+        }
+      #loading{
+        margin: 500px auto;
+      }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="loading">Carregando...</h1>
+        <main id="user">
+            <h1>PESQUISAR</h1>
+            <input id ='pesquisar'type="text" placeholder="Pequisar">
+        </main>
+    </div>
+  
+    
+</body>
+
+
+<script>
+
+    
+    
+    
+    fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.json())
+    .then(json =>{
+        const pesquisar = document.querySelector('#pesquisar');
+        const loading =  document.querySelector('#loading');
+
+        console.log(pesquisar.value = '123');
+    //    pesquisar.addEventListener('click', function(e){
+    //         console.log(e);
+    //    })
+        const divuser = document.querySelector('#user');
+        
+        divuser.style.display = 'none'
+        setTimeout(() => {
+            loading.style.display = 'none'
+            divuser.style.display = ''
+            divuser.innerHTML +=  json.map(({title, id, body})=> {
+            return `
+            <div class='card'>
+                <h1>ID: ${id}</h1>
+                <h2>Titulo: ${title}</h2>
+                <P>Conteúdo: ${body}</P>
+                <a href='/post.html?id=${id}'><button type='button'>Visualizar</button></a>
+            </div>
+            
+            
+            `
+
+        }).join('', ',')
+        }, 1000);
+
+       
+        
+      })
+
+</script>
+</html>

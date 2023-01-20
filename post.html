@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .container{
+            max-width: 80%;
+            margin: 0 auto;
+           
+     
+        }
+
+        #user{
+            display: grid;
+            gap: 20px;
+            padding: 40px 40px;
+            text-align: center;
+        }
+        
+        .card{
+            padding: 10px;
+            background-color: rgb(218, 222, 224);
+            line-height: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+
+        }
+
+        .card p {
+            text-transform: uppercase;
+        }
+
+        button{
+            margin-top: 5px;
+            padding: 10px;
+            /* border-radius: 5px; */
+            width: 95%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <main id="user">
+
+
+        </main>
+    </div>
+  
+    
+</body>
+
+
+<script>
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id"); //pega o value
+
+    // console.log(data);
+
+    
+    
+    
+    fetch('https://jsonplaceholder.typicode.com/posts/'+id)
+    .then(response => response.json())
+    .then(json =>{
+
+        console.log(json);
+        const divuser = document.querySelector('#user');
+
+        divuser.innerHTML = [json].map(({title, id, body})=> {
+            return `
+            <div class='card'>
+                <h1>ID: ${id}</h1>
+                <h2>Titulo: ${title}</h2>
+                <P>Conteúdo: ${body}</P>
+                <a href='/fetch.html'><button type='button'>Voltar</button></a>
+            </div>
+            
+            
+            `
+
+        }).join('', ',')
+        
+      })
+
+</script>
+</html>
